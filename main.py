@@ -1,11 +1,23 @@
-# news-image-01 entry (Python 3.13, standard library only): the image is the
-# entry.png beside this file, and the program copies it to /output/entry.png.
-# The gate takes a whole PNG of at most 1 MiB and 1024 by 1024 pixels, and the
-# judge sees exactly the bytes copied. Deterministic: the same bytes every run.
+"""Round 2 entry for make.fun news-image-01.
+
+Copies the rendered newspaper front page (entry.png) to /output/entry.png.
+Deterministic: the same bytes on every run, no network, no randomness.
+
+Round 2 redesign: a flat-vector night scene leads the page (burning tanker,
+radar dome, Bahrain flag), a "WHERE IT HAPPENED" world map pins the stories,
+and 22 numbered stories cover Friday 13 November 2026. The image is drawn
+by ../news-image-01-build/render.py (PIL, kept out of this repo) and copied
+here as entry.png; this program only copies it to the output path.
+"""
 import os
 import shutil
 
-_SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "entry.png")
-_DST = os.path.join(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"), "entry.png")
-os.makedirs(os.path.dirname(_DST), exist_ok=True)
-shutil.copyfile(_SRC, _DST)
+
+def main():
+    os.makedirs("/output", exist_ok=True)
+    src = os.path.join(os.path.dirname(os.path.abspath(__file__)), "entry.png")
+    shutil.copy(src, "/output/entry.png")
+
+
+if __name__ == "__main__":
+    main()
